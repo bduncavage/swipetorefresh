@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">TheRealSwipeToRefresh</string>
+    <string name="swipe_to_refresh">Swipe to Refresh</string>
+
+</resources>

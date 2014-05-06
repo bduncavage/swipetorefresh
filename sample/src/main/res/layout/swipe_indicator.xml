@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/swipe_to_refresh_background"
+    android:text="@string/swipe_to_refresh"
+    android:textColor="@color/swipe_to_refresh_text"
+    android:textSize="18dp"
+    android:gravity="center"/>

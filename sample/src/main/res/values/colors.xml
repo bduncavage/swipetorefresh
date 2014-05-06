@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="swipe_to_refresh_background">#ddd</color>
+    <color name="swipe_to_refresh_text">#000</color>
+    <color name="refreshing_color1">#f00</color>
+    <color name="refreshing_color2">#0f0</color>
+    <color name="refreshing_color3">#00f</color>
+    <color name="refreshing_color4">#0ff</color>
+</resources>
