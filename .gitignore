@@ -25,3 +25,7 @@ Thumbs.db
 .idea/workspace.xml - remove
 .gradle
 build/
+
+# Xamarin
+obj/
+*.userprefs
