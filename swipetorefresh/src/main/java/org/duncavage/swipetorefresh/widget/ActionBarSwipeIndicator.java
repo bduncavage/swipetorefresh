@@ -21,7 +21,7 @@ import android.widget.TextView;
 /**
  * Created by brett on 4/25/14.
  */
-public class ActionBarSwipeIndicator {
+final class ActionBarSwipeIndicator {
     private final String TAG = "ActionBarSwipeIndicator";
 
     private View mHeaderView;
