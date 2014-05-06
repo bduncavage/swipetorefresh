@@ -28,6 +28,12 @@ public class MainActivity extends ActionBarActivity implements SwipeRefreshLayou
         mSwipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipe_refresh_layout);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setActionBarSwipeIndicatorLayout(R.layout.swipe_indicator);
+        mSwipeRefreshLayout.setColorScheme(
+                R.color.refreshing_color1,
+                R.color.refreshing_color2,
+                R.color.refreshing_color3,
+                R.color.refreshing_color4
+        );
     }
 
     @Override
