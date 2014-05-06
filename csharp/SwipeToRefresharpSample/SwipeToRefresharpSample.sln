@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwipeToRefresharpSample", "SwipeToRefresharpSample\SwipeToRefresharpSample.csproj", "{D33C85C2-CE7E-4F2F-9508-02D6E0944F95}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwipeToRefresh", "lib\SwipeToRefresh\SwipeToRefresh.csproj", "{2F4E8FAD-FCDD-469E-8EC3-4BBAC738B03A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2F4E8FAD-FCDD-469E-8EC3-4BBAC738B03A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F4E8FAD-FCDD-469E-8EC3-4BBAC738B03A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F4E8FAD-FCDD-469E-8EC3-4BBAC738B03A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F4E8FAD-FCDD-469E-8EC3-4BBAC738B03A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D33C85C2-CE7E-4F2F-9508-02D6E0944F95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D33C85C2-CE7E-4F2F-9508-02D6E0944F95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D33C85C2-CE7E-4F2F-9508-02D6E0944F95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D33C85C2-CE7E-4F2F-9508-02D6E0944F95}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = SwipeToRefresharpSample\SwipeToRefresharpSample.csproj
+	EndGlobalSection
+EndGlobal
