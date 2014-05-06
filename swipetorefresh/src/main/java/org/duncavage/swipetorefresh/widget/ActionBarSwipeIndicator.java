@@ -213,9 +213,12 @@ public class ActionBarSwipeIndicator {
         }
 
         TextView tv = (TextView)mHeaderView.findViewById(mTextViewId);
-        if (tv == null) {
+        if (tv == null || !(mHeaderView instanceof TextView)) {
             Log.w(TAG, "setHeaderText could not find TextView in header view");
             return;
+        }
+        if (mHeaderView instanceof TextView) {
+            tv = (TextView)mHeaderView;
         }
         tv.setText(text);
     }
