@@ -8,6 +8,7 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
+import android.os.Build;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -31,6 +32,7 @@ public class ActionBarSwipeIndicator {
     private int mBackgroundColor;
     private int mHeaderViewLayoutResId;
     private Rect mHeaderViewRect;
+    private boolean mHasHoneycomb;
 
     public ActionBarSwipeIndicator(Context context) {
         mContext = context;
@@ -44,52 +46,60 @@ public class ActionBarSwipeIndicator {
         if (resourceId > 0) {
             mStatusBarHeight = mContext.getResources().getDimensionPixelSize(resourceId);
         }
+
+        mHasHoneycomb = Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
     }
 
     public void show() {
         if (mHeaderView.getVisibility() == View.VISIBLE) return;
 
         mHeaderView.setVisibility(View.VISIBLE);
-        ObjectAnimator fadeAnim = ObjectAnimator.ofFloat(mHeaderView, "alpha", 0f, 1f);
-        ObjectAnimator transAnim = ObjectAnimator.ofFloat(mHeaderView, "translationY", -mActionBarHeight, 0f);
-        AnimatorSet animSet = new AnimatorSet();
-        animSet.playTogether(fadeAnim, transAnim);
-        animSet.setDuration(mResources.getInteger(android.R.integer.config_shortAnimTime));
-        animSet.start();
+        if (mHasHoneycomb) {
+            ObjectAnimator fadeAnim = ObjectAnimator.ofFloat(mHeaderView, "alpha", 0f, 1f);
+            ObjectAnimator transAnim = ObjectAnimator.ofFloat(mHeaderView, "translationY", -mActionBarHeight, 0f);
+            AnimatorSet animSet = new AnimatorSet();
+            animSet.playTogether(fadeAnim, transAnim);
+            animSet.setDuration(mResources.getInteger(android.R.integer.config_shortAnimTime));
+            animSet.start();
+        }
     }
 
     public void hide() {
         if (mIsHidingHeader) return;
 
         mIsHidingHeader = true;
-        ObjectAnimator fadeAnim = ObjectAnimator.ofFloat(mHeaderView, "alpha", 1f, 0f);
-        ObjectAnimator transAnim = ObjectAnimator.ofFloat(mHeaderView, "translationY", 0f, -mActionBarHeight);
-        AnimatorSet animSet = new AnimatorSet();
-        animSet.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animator) {
+        if (mHasHoneycomb) {
+            ObjectAnimator fadeAnim = ObjectAnimator.ofFloat(mHeaderView, "alpha", 1f, 0f);
+            ObjectAnimator transAnim = ObjectAnimator.ofFloat(mHeaderView, "translationY", 0f, -mActionBarHeight);
+            AnimatorSet animSet = new AnimatorSet();
+            animSet.addListener(new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animator) {
+                }
 
-            }
+                @Override
+                public void onAnimationCancel(Animator animator) {
+                }
 
-            @Override
-            public void onAnimationEnd(Animator animator) {
-                mHeaderView.setVisibility(View.INVISIBLE);
-                mIsHidingHeader = false;
-            }
+                @Override
+                public void onAnimationRepeat(Animator animator) {
+                }
 
-            @Override
-            public void onAnimationCancel(Animator animator) {
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animator) {
-
-            }
-        });
-        animSet.playTogether(fadeAnim, transAnim);
-        animSet.setDuration(mResources.getInteger(android.R.integer.config_shortAnimTime));
-        animSet.start();
+                @Override
+                public void onAnimationEnd(Animator animator) {
+                    mHeaderView.setVisibility(View.INVISIBLE);
+                    mIsHidingHeader = false;
+                }
+            });
+            animSet.playTogether(fadeAnim, transAnim);
+            animSet.setDuration(mResources.getInteger(android.R.integer.config_shortAnimTime));
+            animSet.start();
+        } else {
+            // Just make the header invisible. A possible improvement could be to use old-style
+            // animations on GB and lower.
+            mHeaderView.setVisibility(View.INVISIBLE);
+            mIsHidingHeader = false;
+        }
     }
 
     public void setBackgroundColor(int color) {
