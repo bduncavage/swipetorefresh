@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.os.Build;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -21,6 +22,8 @@ import android.widget.TextView;
  * Created by brett on 4/25/14.
  */
 public class ActionBarSwipeIndicator {
+    private final String TAG = "ActionBarSwipeIndicator";
+
     private View mHeaderView;
     private Resources mResources;
     private Context mContext;
@@ -33,6 +36,10 @@ public class ActionBarSwipeIndicator {
     private int mHeaderViewLayoutResId;
     private Rect mHeaderViewRect;
     private boolean mHasHoneycomb;
+    private String mIndicatorRefreshingText;
+    private int mIndicatorRefreshingTextColor;
+    private boolean mIsRefreshing;
+    private int mTextViewId;
 
     public ActionBarSwipeIndicator(Context context) {
         mContext = context;
@@ -89,6 +96,7 @@ public class ActionBarSwipeIndicator {
                 public void onAnimationEnd(Animator animator) {
                     mHeaderView.setVisibility(View.INVISIBLE);
                     mIsHidingHeader = false;
+                    setHeaderText(mIndicatorText);
                 }
             });
             animSet.playTogether(fadeAnim, transAnim);
@@ -99,23 +107,43 @@ public class ActionBarSwipeIndicator {
             // animations on GB and lower.
             mHeaderView.setVisibility(View.INVISIBLE);
             mIsHidingHeader = false;
+            setHeaderText(mIndicatorText);
         }
     }
+
+    public void setRefreshing(boolean refreshing) {
+        if (refreshing != mIsRefreshing) {
+            mIsRefreshing = refreshing;
+            if (mIsRefreshing) {
+                setHeaderText(mIndicatorRefreshingText);
+            } else {
+                // hide() resets the text after the animation completes
+                hide();
+            }
+        }
+    }
+
+    public boolean isIsRefreshing() { return mIsRefreshing; }
 
     public void setBackgroundColor(int color) {
         mBackgroundColor = color;
     }
 
-    public void setText(int resId) {
+    public void setSwipeToRefreshText(int resId) {
         mIndicatorText = mContext.getString(resId);
     }
 
-    public void setTextColor(int color) {
+    public void setSwipeToRefreshTextColor(int color) {
         mIndicatorTextColor = color;
     }
 
-    public void setCustomLayout(int resId) {
+    public void setRefreshingText(int resId) { mIndicatorRefreshingText = mContext.getString(resId); }
+
+    public void setRefreshingTextColor(int color) { mIndicatorRefreshingTextColor = color; }
+
+    public void setCustomLayout(int resId, int textViewId) {
         mHeaderViewLayoutResId = resId;
+        mTextViewId = textViewId;
         createHeaderView();
     }
 
@@ -176,5 +204,19 @@ public class ActionBarSwipeIndicator {
 
         WindowManager wm = (WindowManager)mContext.getSystemService(Context.WINDOW_SERVICE);
         wm.addView(mHeaderView, wlp);
+    }
+
+    private void setHeaderText(String text) {
+        if (mHeaderView == null) {
+            Log.w(TAG, "setHeaderText called before header view created");
+            return;
+        }
+
+        TextView tv = (TextView)mHeaderView.findViewById(mTextViewId);
+        if (tv == null) {
+            Log.w(TAG, "setHeaderText could not find TextView in header view");
+            return;
+        }
+        tv.setText(text);
     }
 }

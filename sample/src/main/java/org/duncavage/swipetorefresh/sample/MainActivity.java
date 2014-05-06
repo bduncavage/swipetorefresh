@@ -27,7 +27,9 @@ public class MainActivity extends ActionBarActivity implements SwipeRefreshLayou
         setContentView(R.layout.activity_main);
         mSwipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipe_refresh_layout);
         mSwipeRefreshLayout.setOnRefreshListener(this);
-        mSwipeRefreshLayout.setActionBarSwipeIndicatorLayout(R.layout.swipe_indicator);
+        mSwipeRefreshLayout.setActionBarSwipeIndicatorLayout(R.layout.swipe_indicator, R.id.text);
+        mSwipeRefreshLayout.setActionBarSwipeIndicatorText(R.string.swipe_to_refresh);
+        mSwipeRefreshLayout.setActionBarSwipeIndicatorRefreshingText(R.string.loading);
         mSwipeRefreshLayout.setColorScheme(
                 R.color.refreshing_color1,
                 R.color.refreshing_color2,

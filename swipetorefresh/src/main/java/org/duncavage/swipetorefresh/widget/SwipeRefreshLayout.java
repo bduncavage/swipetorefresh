@@ -20,7 +20,6 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -114,7 +113,7 @@ public class SwipeRefreshLayout extends ViewGroup {
                 mShrinkTrigger.setInterpolator(mDecelerateInterpolator);
                 startAnimation(mShrinkTrigger);
             }
-            if (mActionBarSwipeIndicator != null) {
+            if (mActionBarSwipeIndicator != null && !isRefreshing()) {
                 mActionBarSwipeIndicator.hide();
             }
         }
@@ -175,7 +174,26 @@ public class SwipeRefreshLayout extends ViewGroup {
      */
     public void setActionBarSwipeIndicatorText(int resId) {
         if (mActionBarSwipeIndicator != null) {
-            mActionBarSwipeIndicator.setText(resId);
+            mActionBarSwipeIndicator.setSwipeToRefreshText(resId);
+        }
+    }
+
+    /**
+     * Set the resource id of the string to display in the action bar indicator
+     * overlay while content is refreshing.
+     */
+    public void setActionBarSwipeIndicatorRefreshingText(int resId) {
+        if (mActionBarSwipeIndicator != null) {
+            mActionBarSwipeIndicator.setRefreshingText(resId);
+        }
+    }
+
+    /**
+     * Set the color of the text that is displayed while content is refreshing.
+     */
+    public void setActionBarSwipeIndicatorRefreshingTextColor(int color) {
+        if (mActionBarSwipeIndicator != null) {
+            mActionBarSwipeIndicator.setSwipeToRefreshTextColor(color);
         }
     }
 
@@ -191,9 +209,9 @@ public class SwipeRefreshLayout extends ViewGroup {
     /**
      * Set a custom to layout to be used for the action bar swipe indicator.
      */
-    public void setActionBarSwipeIndicatorLayout(int resId) {
+    public void setActionBarSwipeIndicatorLayout(int resId, int textViewId) {
         if (mActionBarSwipeIndicator != null) {
-            mActionBarSwipeIndicator.setCustomLayout(resId);
+            mActionBarSwipeIndicator.setCustomLayout(resId, textViewId);
         }
     }
 
@@ -202,7 +220,7 @@ public class SwipeRefreshLayout extends ViewGroup {
      */
     public void setActionBarSwipeIndicatorTextColor(int color) {
         if (mActionBarSwipeIndicator != null) {
-            mActionBarSwipeIndicator.setTextColor(color);
+            mActionBarSwipeIndicator.setSwipeToRefreshTextColor(color);
         }
     }
 
@@ -238,11 +256,11 @@ public class SwipeRefreshLayout extends ViewGroup {
             mCurrPercentage = 0;
             mRefreshing = refreshing;
             if (mRefreshing) {
-                mActionBarSwipeIndicator.hide();
                 mProgressBar.start();
             } else {
                 mProgressBar.stop();
             }
+            mActionBarSwipeIndicator.setRefreshing(refreshing);
         }
     }
 

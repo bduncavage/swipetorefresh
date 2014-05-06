@@ -3,5 +3,6 @@
 
     <string name="app_name">TheRealSwipeToRefresh</string>
     <string name="swipe_to_refresh">Swipe to Refresh</string>
+    <string name="loading">Loading...</string>
 
 </resources>
