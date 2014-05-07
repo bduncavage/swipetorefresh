@@ -2,4 +2,6 @@
 <resources>
 	<string name="hello">Hello World, Click Me!</string>
 	<string name="app_name">SwipeToRefresharpSample</string>
+    <string name="swipe_to_refresh">Swipe to Refresh</string>
+    <string name="loading">Loading...</string>
 </resources>
