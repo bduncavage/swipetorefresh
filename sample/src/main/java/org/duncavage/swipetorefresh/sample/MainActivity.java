@@ -27,7 +27,20 @@ public class MainActivity extends ActionBarActivity implements SwipeRefreshLayou
         setContentView(R.layout.activity_main);
         mSwipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipe_refresh_layout);
         mSwipeRefreshLayout.setOnRefreshListener(this);
-        mSwipeRefreshLayout.setActionBarSwipeIndicatorLayout(R.layout.swipe_indicator, R.id.text);
+        // To use the default layout:
+        // Set the background color
+        mSwipeRefreshLayout.setActionBarSwipeIndicatorBackgroundColor(
+                getResources().getColor(R.color.swipe_to_refresh_background));
+        // Set the text colors. If you don't the text will not display.
+        mSwipeRefreshLayout.setActionBarSwipeIndicatorTextColor(
+                getResources().getColor(R.color.swipe_to_refresh_text));
+        mSwipeRefreshLayout.setActionBarSwipeIndicatorRefreshingTextColor(
+                getResources().getColor(R.color.swipe_to_refresh_text));
+
+        // Or you can use a custom layout...
+        // This is recommended if you want more control over the text styling.
+        // mSwipeRefreshLayout.setActionBarSwipeIndicatorLayout(R.layout.swipe_indicator, R.id.text);
+
         mSwipeRefreshLayout.setActionBarSwipeIndicatorText(R.string.swipe_to_refresh);
         mSwipeRefreshLayout.setActionBarSwipeIndicatorRefreshingText(R.string.loading);
         mSwipeRefreshLayout.setColorScheme(
