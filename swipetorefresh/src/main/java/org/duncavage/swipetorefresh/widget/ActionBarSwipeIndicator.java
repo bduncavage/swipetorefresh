@@ -72,7 +72,7 @@ final class ActionBarSwipeIndicator {
     }
 
     public void hide() {
-        if (mIsHidingHeader) return;
+        if (mIsHidingHeader || mHeaderView == null) return;
 
         mIsHidingHeader = true;
         if (mHasHoneycomb) {
@@ -161,6 +161,10 @@ final class ActionBarSwipeIndicator {
         createHeaderView();
     }
 
+    public void onDetatchedFromWindow() {
+        destroyHeaderView();
+    }
+
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
         if (visibleItemCount > 0 && firstVisibleItem == 0 && view.getChildAt(0).getTop() < 0) {
             hide();
@@ -204,6 +208,12 @@ final class ActionBarSwipeIndicator {
 
         WindowManager wm = (WindowManager)mContext.getSystemService(Context.WINDOW_SERVICE);
         wm.addView(mHeaderView, wlp);
+    }
+
+    private void destroyHeaderView() {
+        WindowManager wm = (WindowManager)mContext.getSystemService(Context.WINDOW_SERVICE);
+        wm.removeViewImmediate(mHeaderView);
+        mHeaderView = null;
     }
 
     private void setHeaderText(String text) {

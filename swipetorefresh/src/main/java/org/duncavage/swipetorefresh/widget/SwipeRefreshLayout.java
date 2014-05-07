@@ -166,6 +166,7 @@ public class SwipeRefreshLayout extends ViewGroup {
     public void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         removeCallbacks(mCancel);
+        mActionBarSwipeIndicator.onDetatchedFromWindow();
     }
 
     /**
