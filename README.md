@@ -8,6 +8,6 @@ timeout, and is buggy. So I've modified it to be more like the swipe to refresh 
 
 Repo Structure
 =========
-swipetorefresh - This is the library. Add it to your java Android app as a gradle dependency.
-sample - This is the sample app. Reference it to see how to use the widget.
-csharp - Contains a sample Xamarin.Android app and C# bindings for the library.
+- **swipetorefresh/** - This is the library. Add it to your java Android app as a gradle dependency.
+- **sample/** - This is the sample app. Reference it to see how to use the widget.
+- **csharp/** - Contains a sample Xamarin.Android app and C# bindings for the library.
