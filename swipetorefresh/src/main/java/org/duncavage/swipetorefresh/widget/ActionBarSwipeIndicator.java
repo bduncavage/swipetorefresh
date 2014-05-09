@@ -201,7 +201,7 @@ final class ActionBarSwipeIndicator {
                 PixelFormat.TRANSLUCENT);
 
         wlp.x = 0;
-        wlp.y = mHeaderViewRect.top + mStatusBarHeight;
+        wlp.y = mHeaderViewRect.top == 0 ? mStatusBarHeight : mHeaderViewRect.top;
         wlp.gravity = Gravity.TOP;
 
         WindowManager wm = (WindowManager)mContext.getSystemService(Context.WINDOW_SERVICE);
@@ -229,6 +229,10 @@ final class ActionBarSwipeIndicator {
             tv = (TextView)mHeaderView;
         }
         tv.setText(text);
-        tv.setTextColor(color);
+        // Only set the color if we are using the default layout.
+        // Otherwise, just let the layout determine the text color.
+        if (mHeaderViewLayoutResId == 0) {
+            tv.setTextColor(color);
+        }
     }
 }
