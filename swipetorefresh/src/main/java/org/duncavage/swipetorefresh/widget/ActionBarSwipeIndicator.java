@@ -96,7 +96,7 @@ final class ActionBarSwipeIndicator {
                 public void onAnimationEnd(Animator animator) {
                     mHeaderView.setVisibility(View.INVISIBLE);
                     mIsHidingHeader = false;
-                    setHeaderText(mIndicatorText);
+                    setHeaderText(mIndicatorText, mIndicatorTextColor);
                 }
             });
             animSet.playTogether(fadeAnim, transAnim);
@@ -107,7 +107,7 @@ final class ActionBarSwipeIndicator {
             // animations on GB and lower.
             mHeaderView.setVisibility(View.INVISIBLE);
             mIsHidingHeader = false;
-            setHeaderText(mIndicatorText);
+            setHeaderText(mIndicatorText, mIndicatorTextColor);
         }
     }
 
@@ -115,7 +115,7 @@ final class ActionBarSwipeIndicator {
         if (refreshing != mIsRefreshing) {
             mIsRefreshing = refreshing;
             if (mIsRefreshing) {
-                setHeaderText(mIndicatorRefreshingText);
+                setHeaderText(mIndicatorRefreshingText, mIndicatorRefreshingTextColor);
             } else {
                 // hide() resets the text after the animation completes
                 hide();
@@ -133,9 +133,7 @@ final class ActionBarSwipeIndicator {
         mIndicatorText = mContext.getString(resId);
     }
 
-    public void setSwipeToRefreshTextColor(int color) {
-        mIndicatorTextColor = color;
-    }
+    public void setSwipeToRefreshTextColor(int color) {  mIndicatorTextColor = color; }
 
     public void setRefreshingText(int resId) { mIndicatorRefreshingText = mContext.getString(resId); }
 
@@ -216,7 +214,7 @@ final class ActionBarSwipeIndicator {
         mHeaderView = null;
     }
 
-    private void setHeaderText(String text) {
+    private void setHeaderText(String text, int color) {
         if (mHeaderView == null) {
             Log.w(TAG, "setHeaderText called before header view created");
             return;
@@ -231,5 +229,6 @@ final class ActionBarSwipeIndicator {
             tv = (TextView)mHeaderView;
         }
         tv.setText(text);
+        tv.setTextColor(color);
     }
 }

@@ -194,7 +194,7 @@ public class SwipeRefreshLayout extends ViewGroup {
      */
     public void setActionBarSwipeIndicatorRefreshingTextColor(int color) {
         if (mActionBarSwipeIndicator != null) {
-            mActionBarSwipeIndicator.setSwipeToRefreshTextColor(color);
+            mActionBarSwipeIndicator.setRefreshingTextColor(color);
         }
     }
 
