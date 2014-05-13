@@ -432,6 +432,11 @@ public class SwipeRefreshLayout extends ViewGroup {
     }
 
     private void startRefresh() {
+        if (isRefreshing()) {
+            // Already refreshing, no need to do anything.
+            // Notifying the listener is not a good idea.
+            return;
+        }
         removeCallbacks(mCancel);
         setRefreshing(true);
         mListener.onRefresh();
