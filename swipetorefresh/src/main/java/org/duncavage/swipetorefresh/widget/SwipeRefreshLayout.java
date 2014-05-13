@@ -56,7 +56,6 @@ import android.widget.AbsListView;
  * refresh of the content wherever this gesture is used.</p>
  */
 public class SwipeRefreshLayout extends ViewGroup {
-    private static final long RETURN_TO_ORIGINAL_POSITION_TIMEOUT = 300;
     private static final float ACCELERATE_INTERPOLATION_FACTOR = 1.5f;
     private static final float DECELERATE_INTERPOLATION_FACTOR = 2f;
     private static final float PROGRESS_BAR_HEIGHT = 4;
@@ -68,9 +67,9 @@ public class SwipeRefreshLayout extends ViewGroup {
     private OnRefreshListener mListener;
     private MotionEvent mDownEvent;
     private boolean mRefreshing = false;
+    private boolean mHasRefreshed = false;
     private int mTouchSlop;
     private float mDistanceToTriggerSync = -1;
-    private float mPrevY;
     private int mMediumAnimationDuration;
     private float mFromPercentage = 0;
     private float mCurrPercentage = 0;
@@ -374,7 +373,7 @@ public class SwipeRefreshLayout extends ViewGroup {
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         ensureTarget();
         boolean handled = false;
-        if (isEnabled() && !canChildScrollUp()) {
+        if (isEnabled() && !canChildScrollUp() && !isRefreshing()) {
             handled = onTouchEvent(ev);
         }
         return !handled ? super.onInterceptTouchEvent(ev) : handled;
@@ -393,9 +392,12 @@ public class SwipeRefreshLayout extends ViewGroup {
             case MotionEvent.ACTION_DOWN:
                 mCurrPercentage = 0;
                 mDownEvent = MotionEvent.obtain(event);
-                mPrevY = mDownEvent.getY();
                 break;
             case MotionEvent.ACTION_MOVE:
+                if (mHasRefreshed || isRefreshing()) {
+                    // We've already triggered a refresh once during this gesture.
+                    return false;
+                }
                 if (mDownEvent != null) {
                     final float eventY = event.getY();
                     float yDiff = eventY - mDownEvent.getY();
@@ -404,7 +406,7 @@ public class SwipeRefreshLayout extends ViewGroup {
                         if (yDiff > mDistanceToTriggerSync) {
                             // User movement passed distance; trigger a refresh
                             startRefresh();
-                            handled = true;
+                            mHasRefreshed = handled = true;
                             break;
                         } else {
                             // Just track the user's movement
@@ -412,7 +414,6 @@ public class SwipeRefreshLayout extends ViewGroup {
                                     mAccelerateInterpolator.getInterpolation(
                                             yDiff / mDistanceToTriggerSync));
                             updatePositionTimeout();
-                            mPrevY = event.getY();
                             handled = true;
                         }
                     }
@@ -425,7 +426,13 @@ public class SwipeRefreshLayout extends ViewGroup {
                     mDownEvent = null;
                 }
                 removeCallbacks(mCancel);
-                mCancel.run();
+                if (mHasRefreshed) {
+                    // If we've already refreshed, just unset the flag.
+                    // No need to run the cancel runnable;
+                    mHasRefreshed = false;
+                } else {
+                    mCancel.run();
+                }
                 break;
         }
         return handled;
