@@ -94,9 +94,13 @@ final class ActionBarSwipeIndicator {
 
                 @Override
                 public void onAnimationEnd(Animator animator) {
-                    mHeaderView.setVisibility(View.INVISIBLE);
                     mIsHidingHeader = false;
-                    setHeaderText(mIndicatorText, mIndicatorTextColor);
+                    // This animation can complete after we've been detached from the window.
+                    // At which time we'll have nulled the header view reference.
+                    if (mHeaderView != null) {
+                        mHeaderView.setVisibility(View.INVISIBLE);
+                        setHeaderText(mIndicatorText, mIndicatorTextColor);
+                    }
                 }
             });
             animSet.playTogether(fadeAnim, transAnim);
@@ -209,9 +213,11 @@ final class ActionBarSwipeIndicator {
     }
 
     private void destroyHeaderView() {
-        WindowManager wm = (WindowManager)mContext.getSystemService(Context.WINDOW_SERVICE);
-        wm.removeViewImmediate(mHeaderView);
-        mHeaderView = null;
+        if (mHeaderView != null) {
+            WindowManager wm = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
+            wm.removeViewImmediate(mHeaderView);
+            mHeaderView = null;
+        }
     }
 
     private void setHeaderText(String text, int color) {
