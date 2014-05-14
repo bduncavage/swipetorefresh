@@ -53,6 +53,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Xamarin.Android.Bindings.targets" />
   <ItemGroup>
-    <EmbeddedJar Include="Jars\swipetorefresh.jar" />
+    <LibraryProjectZip Include="Jars\swipetorefresh.zip" />
   </ItemGroup>
 </Project>

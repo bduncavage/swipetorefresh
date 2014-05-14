@@ -515,6 +515,9 @@ namespace SwipeToRefresharpSample
 			// aapt resource value: 0x7f08000b
 			public const int abc_search_view_text_min_width = 2131230731;
 			
+			// aapt resource value: 0x7f080010
+			public const int fallback_action_bar_height = 2131230736;
+			
 			static Dimension()
 			{
 				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
@@ -790,7 +793,10 @@ namespace SwipeToRefresharpSample
 			public const int abc_textfield_searchview_right_holo_light = 2130837590;
 			
 			// aapt resource value: 0x7f020057
-			public const int Icon = 2130837591;
+			public const int ic_launcher = 2130837591;
+			
+			// aapt resource value: 0x7f020058
+			public const int Icon = 2130837592;
 			
 			static Drawable()
 			{
@@ -1174,11 +1180,11 @@ namespace SwipeToRefresharpSample
 			// aapt resource value: 0x7f0a000b
 			public const int abc_shareactionprovider_share_with_application = 2131361803;
 			
-			// aapt resource value: 0x7f0a000e
-			public const int app_name = 2131361806;
-			
 			// aapt resource value: 0x7f0a000d
-			public const int hello = 2131361805;
+			public const int app_name = 2131361805;
+			
+			// aapt resource value: 0x7f0a000e
+			public const int hello = 2131361806;
 			
 			// aapt resource value: 0x7f0a0010
 			public const int loading = 2131361808;
