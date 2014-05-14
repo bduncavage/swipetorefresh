@@ -18,6 +18,8 @@ import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.TextView;
 
+import org.duncavage.swipetorefresh.R;
+
 /**
  * Created by brett on 4/25/14.
  */
@@ -52,6 +54,10 @@ final class ActionBarSwipeIndicator {
         int resourceId = mContext.getResources().getIdentifier("status_bar_height", "dimen", "android");
         if (resourceId > 0) {
             mStatusBarHeight = mContext.getResources().getDimensionPixelSize(resourceId);
+        }
+        if (mActionBarHeight == 0) {
+            // use our fallback. not super ideal, but works in a pinch on pre-honeycomb
+            mActionBarHeight = mContext.getResources().getDimensionPixelSize(R.dimen.fallback_action_bar_height);
         }
 
         mHasHoneycomb = Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
