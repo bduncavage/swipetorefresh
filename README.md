@@ -11,3 +11,7 @@ Repo Structure
 - **swipetorefresh/** - This is the library. Add it to your java Android app as a gradle dependency.
 - **sample/** - This is the sample app. Reference it to see how to use the widget.
 - **csharp/** - Contains a sample Xamarin.Android app and C# bindings for the library.
+
+License
+=======
+This project is licensed under the [MIT license](LICENSE.md)
